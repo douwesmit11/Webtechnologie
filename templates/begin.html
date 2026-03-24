@@ -7,22 +7,24 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body>
-  <h1 class="text-sm font-bold underline">
-    Hello world!
-  </h1>
-  
+<body class="relative">
+
+  <!-- Background image -->
+  <div class="absolute inset-0 bg-cover bg-center -z-10"
+       style="background-image: url('https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1212,c_limit/15b8bfc3-1fb4-4cbc-bc4c-b980f05a26bc/11-ejercicios-de-f%C3%BAtbol-que-mejoran-habilidades-esenciales-de-este-juego.jpg');">
+  </div>
+
+  <!-- Content boven de background -->
+  <h1 class="text-sm font-bold underline">Hello world!</h1>
+
   <a href="inloggen.html">inloggen</a>
-  
+
+  <!-- Account afbeelding -->
   <a href="account.html">
-  <img src="huis.png" width="300" height="500">
+    <img src="huis.png" class="relative z-10" width="300" height="500">
   </a>
 
+  <button class="ml-[1000px] mt-[5px] bg-blue-500 p-24 relative z-10">Klik</button>
 
-  <div class="w-screen h-screen bg-cover bg-center" 
-     style="background-image: url('achtergrond.png');">
-  </div>
-  <button class="ml-[1000px] mt-[5px] bg-blue-500 p-24 ">Klik</button>
 </body>
-
 </html>

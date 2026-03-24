@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLALCHEMY
-from sqlalchemy import Mapped, MappedColumn
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import Mapped, MappedColumn
 
 db = SQLAlchemy()
 

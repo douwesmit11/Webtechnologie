@@ -14,17 +14,21 @@ db.init_app(app)
 def home():
     return render_template("begin.html")
 
-@app.route("/account")
+@app.route("/account.html")
 def account():
     return render_template("account.html")
 
-@app.route("/maakpost")
+@app.route("/maakpost.html")
 def maakpost():
     return render_template("maakpost.html")
 
-@app.route("/inloggen")
+@app.route("/inloggen.html")
 def inloggen():
     return render_template("inloggen.html")
+
+@app.route("/regristreren.html")
+def regristreren():
+    return render_template("regristreren.html")
 
 if __name__ == "__main__":
     with app.app_context():

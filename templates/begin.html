@@ -7,24 +7,32 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="relative">
+<body class="relative min-h-screen">
 
-  <!-- Background image -->
-  <div class="absolute inset-0 bg-cover bg-center -z-10"
-       style="background-image: url('https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1212,c_limit/15b8bfc3-1fb4-4cbc-bc4c-b980f05a26bc/11-ejercicios-de-f%C3%BAtbol-que-mejoran-habilidades-esenciales-de-este-juego.jpg');">
+  <!-- Achtergrondafbeelding -->
+  <div class="absolute inset-0 -z-10">
+    <div class="bg-[url('https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1212,c_limit/15b8bfc3-1fb4-4cbc-bc4c-b980f05a26bc/11-ejercicios-de-f%C3%BAtbol-que-mejoran-habilidades-esenciales-de-este-juego.jpg')] 
+                bg-cover bg-center w-full h-full">
+    </div>
   </div>
 
-  <!-- Content boven de background -->
-  <h1 class="text-sm font-bold underline">Hello world!</h1>
+  <!-- Grijs semi-transparant blok -->
+  <div class="absolute top-0 w-full h-20 bg-gray-500 bg-opacity-50 z-0"></div>
 
-  <a href="inloggen.html">inloggen</a>
+  <!-- Flex menu -->
+  <div class="flex items-center gap-8 p-4 relative z-10">
+    <a href="/" class="block">
+      <img src="https://media.istockphoto.com/id/1304402879/es/vector/icono-de-la-casa-en-la-plantilla-de-logotipo-vectorial-de-estilo-plano-de-moda.jpg?s=170667a&w=0&k=20&c=EF-4DV5SGpj-Kmpie1RhzK034zBnH4NrjWjm19Lxcss=" 
+           class="w-8 h-8 object-contain">
+    </a>
 
-  <!-- Account afbeelding -->
-  <a href="account.html">
-    <img src="huis.png" class="relative z-10" width="300" height="500">
-  </a>
+    <a href="account.html" class="block">
+      <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" 
+           class="w-8 h-8 object-contain">
+    </a>
 
-  <button class="ml-[1000px] mt-[5px] bg-blue-500 p-24 relative z-10">Klik</button>
+    <a href="inloggen.html">inloggen</a>
+  </div>
 
 </body>
 </html>

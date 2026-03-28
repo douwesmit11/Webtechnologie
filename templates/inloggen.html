@@ -9,17 +9,16 @@
 
 <body class="relative min-h-screen">
 
-  <!-- Achtergrondafbeelding -->
-  <div class="absolute inset-0 -z-10">
+  
+  <div class="absolute inset-0 z-0">
     <div class="bg-[url('https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1212,c_limit/15b8bfc3-1fb4-4cbc-bc4c-b980f05a26bc/11-ejercicios-de-f%C3%BAtbol-que-mejoran-habilidades-esenciales-de-este-juego.jpg')] 
                 bg-cover bg-center w-full h-full">
     </div>
   </div>
 
-  <!-- Grijs semi-transparant blok -->
-  <div class="absolute top-0 w-full h-20 bg-gray-500 bg-opacity-50 z-0"></div>
+  
+  <div class="absolute top-0 w-full h-20 bg-gray-500 bg-opacity-70 z-0"></div>
 
-  <!-- Flex menu -->
   <div class="flex items-center gap-8 p-4 relative z-10">
     <a href="/" class="block">
       <img src="https://media.istockphoto.com/id/1304402879/es/vector/icono-de-la-casa-en-la-plantilla-de-logotipo-vectorial-de-estilo-plano-de-moda.jpg?s=170667a&w=0&k=20&c=EF-4DV5SGpj-Kmpie1RhzK034zBnH4NrjWjm19Lxcss=" 
@@ -36,32 +35,29 @@
 
  
 
-  <div class="max-w-sm mx-auto mt-10 p-6 bg-gray-500 ">
-  <form class="space-y-4">
+ <form action="/registreren" method="POST" class="relative z-10 space-y-6 mt-10">
 
-    
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-      <input type="email" id="email" name="email" 
-             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-    </div>
+  <div>
+    <label class="block text-center">Email</label>
+    <input type="email" name="email" class="w-200 px-4 py-2 border rounded-lg ml-150">
+  </div>
 
-    
-    <div>
-      <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Wachtwoord</label>
-      <input type="password" id="password" name="password" 
-             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-    </div>
+  <div>
+    <label class="block text-center">Wachtwoord</label>
+    <input type="password" name="password" class="w-200 px-4 py-2 border rounded-lg ml-150">
+  </div>
 
-    
-    <button type="submit"
-            class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg">
-      Inloggen
-    </button>
+  <button type="submit" class="w-200 bg-blue-600 text-white py-2 px-4 rounded-lg ml-150">
+    Inloggen
+  </button>
 
-    <a href="regristreren.html">heeft u nog geen account? klik op deze tekst om te regristreren</a>
+</form>
 
-  </form>
+  <a href="regristreren.html" class="text-center block relative z-10">
+  heeft u nog geen account? klik op deze tekst om te registreren
+  </a>
+
+ 
 </div>
 
 </body>

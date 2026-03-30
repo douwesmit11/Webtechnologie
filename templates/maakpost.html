@@ -9,33 +9,102 @@
 
 <body class="relative min-h-screen">
 
-  <div class="absolute inset-0 -z-10">
-  <img src=  'https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1212,c_limit/15b8bfc3-1fb4-4cbc-bc4c-b980f05a26bc/11-ejercicios-de-f%C3%BAtbol-que-mejoran-habilidades-esenciales-de-este-juego.jpg'
- class="w-full h-full object-cover">
-</div>
-
-
- 
   
+  <div class="absolute inset-0 z-0">
+    <div class="bg-[url('https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1212,c_limit/15b8bfc3-1fb4-4cbc-bc4c-b980f05a26bc/11-ejercicios-de-f%C3%BAtbol-que-mejoran-habilidades-esenciales-de-este-juego.jpg')] 
+                bg-cover bg-center w-full h-full">
+    </div>
+  </div>
 
-  
+  <div class="absolute top-0 w-full h-20 bg-gray-500 bg-opacity-50 z-0"></div>
 
   
-  <div class="flex items-center gap-8">
-  <a href="/" class="block">
-    <img src="https://media.istockphoto.com/id/1304402879/es/vector/icono-de-la-casa-en-la-plantilla-de-logotipo-vectorial-de-estilo-plano-de-moda.jpg?s=170667a&w=0&k=20&c=EF-4DV5SGpj-Kmpie1RhzK034zBnH4NrjWjm19Lxcss=" class="w-8 h-8 object-contain">
-  </a>
+  <div class="flex items-center gap-8 p-4 relative z-10">
+    <a href="/" class="block">
+      <img src="https://media.istockphoto.com/id/1304402879/es/vector/icono-de-la-casa-en-la-plantilla-de-logotipo-vectorial-de-estilo-plano-de-moda.jpg?s=170667a&w=0&k=20&c=EF-4DV5SGpj-Kmpie1RhzK034zBnH4NrjWjm19Lxcss=" 
+           class="w-8 h-8 object-contain">
+    </a>
 
-  <a href="account.html" class="block">
+    <a href="account.html" class="block">
+      <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" 
+           class="w-8 h-8 object-contain">
+    </a>
+
+    <a href="inloggen.html">inloggen</a>
+  </div>
+
+
+
+
+
+
+
+  
+  <div class="h-screen flex items-center justify-center">
+  <div class="w-1/2 h-1/2 bg-gray-500 relative">
     
-    <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png"  class="w-8 h-8 object-contain">
-  </a>
+      <div>
+        <p class="ml-10 text-[20px]">Post bewerken</p>
 
-  <a href="inloggen.html">inloggen</a>
-  
-</div>
+        <button type="submit" class="w-50 bg-green-600 text-white py-2 px-4 ml-150">
+          Klaar & post
+        </button>
+         
+        <div>
+          <label class=" block text-center">Titel</label>
+          <input type="text"  class="w-200 h-10 ml-15 bg-white">
+        </div>
 
-  
+       
+        <div class="flex items-center gap-8 p-4 relative z-10">
+
+           <div>
+            <button onclick="document.getElementById('fotokiezen').click()">
+              <img 
+                class="mt-10 ml-20 w-10"
+                src="https://static.vecteezy.com/system/resources/previews/011/912/003/non_2x/plus-sign-icon-free-png.png">
+            </button>
+            <p class="ml-13">Voeg foto toe</p>
+          </div>
+
+          <img id="fotoid" class="object-cover w-10 rounded">
+          <input 
+          type="file" 
+          id="fotokiezen"
+          accept="image/*"
+          onchange="foto(event)">
+        </div>
+
+        <label class=" block text-center mt-15">Beschrijving</label>
+        <input type="text" class="w-200 h-10 ml-15  bg-white">
+
+        
+
+        
+        
+
+     
+      
+
+      </div>
+    </div>
+  </div>
+
+      
+
 
 </body>
 </html>
+
+<script>
+  function foto(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('fotoid');
+
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+      
+      
+    }
+  }
+</script>

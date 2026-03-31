@@ -78,6 +78,9 @@
         <label class=" block text-center mt-15">Beschrijving</label>
         <input type="text" class="w-200 h-10 ml-15  bg-white">
 
+
+       
+
         
 
         
@@ -100,6 +103,7 @@
   function foto(event) {
     const file = event.target.files[0];
     const preview = document.getElementById('fotoid');
+    
 
     if (file) {
       preview.src = URL.createObjectURL(file);

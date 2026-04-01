@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="/registreren" method="POST" class="space-y-6 mt-10">
+
+  <div>
+    <label class="block text-center">Email</label>
+    <input type="email" name="email" class="w-full max-w-md mx-auto block px-4 py-2 border">
+  </div>
+
+  <div>
+    <label class="block text-center">Wachtwoord</label>
+    <input type="password" name="password" class="w-full max-w-md mx-auto block px-4 py-2 border">
+  </div>
+
+  <button type="submit" class="w-full max-w-md mx-auto block bg-gray-600 text-white py-2 px-4">
+    Inloggen
+  </button>
+
+</form>
+
+<a href="/registreren" class="text-center block mt-4">
+  Heeft u nog geen account? Klik hier om te registreren
+</a>
+
+{% endblock %}

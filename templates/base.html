@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% block title %}My Website{% endblock %}</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+
+<body class="relative min-h-screen text-gray-900">
+
+  <div class="fixed inset-0 -z-10">
+    <div class="w-full h-full bg-[url('https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1212,c_limit/15b8bfc3-1fb4-4cbc-bc4c-b980f05a26bc/11-ejercicios-de-f%C3%BAtbol-que-mejoran-habilidades-esenciales-de-este-juego.jpg')] bg-cover bg-center"></div>
+    <div class="absolute inset-0 "></div>
+  </div>
+
+  <div class="relative z-10">
+    {% include "components/navbar.html" %}
+  </div>
+
+  <main class="relative z-10">
+    {% block content %}{% endblock %}
+  </main>
+
+  
+</body>
+
+</html>

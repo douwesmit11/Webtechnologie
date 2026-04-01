@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="h-screen flex items-center justify-center">
+  <div class="w-1/2 h-1/2 bg-gray-500 p-6">
+
+    <p class="text-xl ml-4">Post bewerken</p>
+
+    <button type="submit" class="bg-green-600 text-white py-2 px-4 ml-auto block mb-4">
+      Klaar & post
+    </button>
+
+    <div class="mb-4">
+      <label class="block text-center">Titel</label>
+      <input type="text" class="w-full max-w-md mx-auto block h-10 bg-white px-2">
+    </div>
+
+    <div class="flex items-center gap-6 justify-center mt-6">
+
+      <div class="text-center">
+        <button onclick="document.getElementById('fotokiezen').click()">
+          <img class="w-10 mx-auto"
+            src="https://static.vecteezy.com/system/resources/previews/011/912/003/non_2x/plus-sign-icon-free-png.png">
+        </button>
+        <p>Voeg foto toe</p>
+      </div>
+
+      <img id="fotoid" class="object-cover w-16 h-16 rounded">
+
+      <input type="file" id="fotokiezen" class="hidden" accept="image/*" onchange="foto(event)">
+    </div>
+
+    <div class="mt-6">
+      <label class="block text-center">Beschrijving</label>
+      <input type="text" class="w-full max-w-md mx-auto block h-10 bg-white px-2">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function foto(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('fotoid');
+
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+    }
+  }
+</script>
+
+{% endblock %}

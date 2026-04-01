@@ -6,15 +6,19 @@ import os
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+    os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 app.secret_key = "geheim"
 
+
 @app.route("/")
 def home():
-    return render_template("begin.html")
+    return render_template("pages/begin.html")
+
+
 def vorige():
     ...
 
@@ -23,26 +27,30 @@ def volgende():
     ...
 
 
-@app.route("/account.html")
+@app.route("/account")
 def account():
-    return render_template("account.html")
+    return render_template("pages/account.html")
 
-@app.route("/maakpost.html")
+
+@app.route("/maakpost")
 def maakpost():
-    return render_template("maakpost.html")
+    return render_template("pages/maakpost.html")
 
-@app.route("/inloggen.html")
+
+@app.route("/inloggen")
 def inloggen():
-    return render_template("inloggen.html")
+    return render_template("pages/inloggen.html")
 
-@app.route("/regristreren.html", methods=["GET", "POST"])
+
+@app.route("/registreren", methods=["GET", "POST"])
 def regristreren():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
         return redirect("/inloggen.html")
 
-    return render_template("regristreren.html")
+    return render_template("pages/registreren.html")
+
 
 if __name__ == "__main__":
     with app.app_context():

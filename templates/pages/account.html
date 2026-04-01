@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="h-screen flex items-center justify-center">
+  <div class="flex w-1/2 h-4/5 bg-gray-500 p-4">
+
+    <div>
+      <button onclick="document.getElementById('fotokiezen').click()">
+        <img class="mt-10 ml-20 w-10"
+          src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png">
+      </button>
+
+      <img id="fotoid" class="object-cover w-10 rounded">
+
+      <input type="file" id="fotokiezen" accept="image/*" onchange="foto(event)">
+    </div>
+
+    <div class="flex flex-col gap-15 ml-4">
+      <p>Email</p>
+      <p>Wachtwoord</p>
+      <p>Aantal post</p>
+    </div>
+
+    <div class="flex flex-col gap-10 ml-4">
+      <div class="w-90 h-10 bg-white">
+        <p>...</p>
+      </div>
+      <div class="w-90 h-10 bg-white">
+        <p>...</p>
+      </div>
+      <div class="w-90 h-10 bg-white">
+        <p>...</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function foto(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('fotoid');
+
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+    }
+  }
+</script>
+
+{% endblock %}

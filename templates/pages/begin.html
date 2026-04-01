@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="h-screen flex items-center justify-center">
+  <div class="w-1/2 h-1/2 bg-gray-500 relative">
+
+    <button onclick="volgende()">
+      <img class="absolute -right-10 top-1/2 -translate-y-1/2 translate-x-full w-10"
+        src="https://static.vecteezy.com/system/resources/previews/017/785/077/non_2x/right-arrow-icon-on-transparent-background-free-png.png">
+    </button>
+
+    <img id="plaatje" class="w-full h-full object-cover object-center">
+
+    <button onclick="vorige()">
+      <img class="absolute -left-10 top-1/2 -translate-y-1/2 -translate-x-full w-10"
+        src="https://static.vecteezy.com/system/resources/thumbnails/017/785/207/small_2x/left-arrow-icon-on-transparent-background-free-png.png">
+    </button>
+
+  </div>
+</div>
+
+{% endblock %}

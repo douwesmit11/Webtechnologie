@@ -9,6 +9,7 @@ import os
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
     os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -49,15 +50,16 @@ def regristreren():
 
 @app.route("/registreren/create", methods=["POST"])
 def createUser():
-    data = request.get_json()
+    data = request.form
 
     username = data.get('username')
     email = data.get('email')
-    password = data.get('password')
+    password = data.get('password_repeat')
 
     timestamp = int(datetime.now().timestamp())
 
     if not username or len(username) < 3:
+        return 
         return jsonify({"error": "Gebruikersnaam moet minimaal 3 karakters bevatten"}), 400
 
     if not re.match(EMAIL_REGEX, email):

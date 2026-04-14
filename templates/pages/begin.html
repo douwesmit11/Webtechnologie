@@ -5,19 +5,61 @@
 <div class="h-screen flex items-center justify-center">
   <div class="w-1/2 h-1/2 bg-gray-500 relative">
 
-    <button onclick="volgende()">
-      <img class="absolute -right-10 top-1/2 -translate-y-1/2 translate-x-full w-10"
-        src="https://static.vecteezy.com/system/resources/previews/017/785/077/non_2x/right-arrow-icon-on-transparent-background-free-png.png">
+    <button type="button" class="absolute -right-10 top-1/2 -translate-y-1/2 translate-x-full" onclick="volgende()">
+      <img class="w-10 cursor-pointer"
+        src="https://static.vecteezy.com/system/resources/previews/017/785/077/non_2x/right-arrow-icon-on-transparent-background-free-png.png"
+        alt="volgende">
     </button>
 
     <img id="plaatje" class="w-full h-full object-cover object-center">
 
-    <button onclick="vorige()">
-      <img class="absolute -left-10 top-1/2 -translate-y-1/2 -translate-x-full w-10"
-        src="https://static.vecteezy.com/system/resources/thumbnails/017/785/207/small_2x/left-arrow-icon-on-transparent-background-free-png.png">
+    <button type="button" class="absolute -left-10 top-1/2 -translate-y-1/2 -translate-x-full" onclick="vorige()">
+      <img class="w-10 cursor-pointer"
+        src="https://static.vecteezy.com/system/resources/thumbnails/017/785/207/small_2x/left-arrow-icon-on-transparent-background-free-png.png"
+        alt="vorige">
     </button>
+
+
+
 
   </div>
 </div>
+
+<script>
+  // willeukeurig voorbeelden 
+  let images = [
+    "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1200&q=80",
+    "https://images.unsplash.com/photo-1521412644187-c49fa049e84d?w=1200&q=80",
+    
+  ]
+
+  let huidignummer = 0
+
+  function loadImages(){
+    if (typeof IMAGES !== 'undefined' && Array.isArray(IMAGES)) { // kijk of images bestaat en of het een lijst is
+      images = IMAGES
+    }
+    setImage()
+  }
+
+  function setImage() { // zet het plaatje neer door de id 
+    const el = document.getElementById('plaatje')
+    el.src = images[huidignummer]
+  }
+
+  function volgende() { // door de deling van de lengte van de lijst gaat hij bij het eind weer naaar nul
+    if (!images.length) return
+    huidignummer = (huidignummer + 1) % images.length
+    setImage()
+  }
+
+  function vorige() {
+    if (!images.length) return
+    huidignummer = (huidignummer - 1 + images.length) % images.length // door de deling van de lengte van de lijst gaat hij bij het eind weer naaar nul
+    setImage()
+  }
+
+  document.addEventListener('DOMContentLoaded', loadImages)
+</script>
 
 {% endblock %}

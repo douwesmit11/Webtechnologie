@@ -27,6 +27,8 @@ def home():
 
 
 
+
+
 @app.route("/account")
 def account():
     return render_template("pages/account.html")

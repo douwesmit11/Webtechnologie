@@ -2,7 +2,12 @@
 
 {% block content %}
 
-<form action="/regristreren.html" method="POST" class="space-y-6 mt-10">
+<form action="/registreren/create" method="POST" class="space-y-6 bg-white opacity-90 mt-10 mx-auto rounded-md w-4/12 p-6 ">
+
+  <div>
+    <label class="block text-center">Gebruikersnaam</label>
+    <input type="text" name="username" class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg">
+  </div>
 
   <div>
     <label class="block text-center">Email</label>
@@ -13,6 +18,13 @@
     <label class="block text-center">Wachtwoord</label>
     <input type="password" name="password" class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg">
   </div>
+
+   <div>
+    <label class="block text-center">Wachtwoord herhalen</label>
+    <input type="password" name="password_repeat" class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg">
+  </div>
+  
+
 
   <button type="submit" class="w-full max-w-md mx-auto block bg-blue-600 text-white py-2 px-4 rounded-lg">
     registreren

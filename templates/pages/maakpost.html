@@ -44,8 +44,6 @@
     const preview = document.getElementById('fotoid');
     if (file) {
       preview.src = URL.createObjectURL(file);
-    } else {
-      preview.src = '';
     }
   }
 
@@ -65,8 +63,8 @@
     // kijk of alle velden zijn ingevuld
     const filePresent = file && file.size && file.size > 0;
     if (!titel || !description || !filePresent) {
-      alert('Je moet titel, beschrijving en een foto invullen.');
-      if (btn) { btn.disabled = false; btn.textContent = 'Klaar & post'; }
+      alert('Je moet titel,  beschrijving en een foto invullen.');
+      if (btn) { btn.disabled = false; }
       return;
     }
 
@@ -82,7 +80,7 @@
       if (!res.ok) {
         const txt = await res.text();
         alert('Fout bij posten: ' + txt);
-        if (btn) { btn.disabled = false; btn.textContent = 'Klaar & post'; }
+        if (btn) { btn.disabled = false; }
         return;
       }
 
@@ -93,7 +91,7 @@
       } 
     } catch (err) {
       alert('Netwerkfout: ' + err.message);
-      if (btn) { btn.disabled = false; btn.textContent = 'Klaar & post'; }
+      if (btn) { btn.disabled = false; }
     }
   }
 </script>

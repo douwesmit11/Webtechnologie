@@ -1,7 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import Mapped, MappedColumn
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+
 db = SQLAlchemy()
+
 
 class User(db.Model):
     __tablename__ = "users"
@@ -13,13 +15,19 @@ class User(db.Model):
     )
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False, index=True)
-    email = db.Column(db.String(120), unique=True, nullable=False, index=True)
-    password = db.Column(db.String(255), nullable=False)
+    username = db.Column(db.String(80), unique=True,
+                         nullable=False, index=True)
+    email = db.Column(db.String(120), unique=True,
+                      nullable=False, index=True)
+
+    # ✅ FIX: use password_hash instead of password
+    password_hash = db.Column(db.String(255), nullable=False)
+
     profile_image = db.Column(db.String(255), nullable=True)
     role = db.Column(db.String(20), nullable=False, default="user")
     is_active = db.Column(db.Boolean, nullable=False, default=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime,
         nullable=False,
@@ -47,6 +55,7 @@ class User(db.Model):
         lazy=True
     )
 
+    # ✅ Password handling
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -61,7 +70,6 @@ class User(db.Model):
         return f"<User {self.username}>"
 
 
-
 class UserPost(db.Model):
     __tablename__ = "user_posts"
 
@@ -71,7 +79,8 @@ class UserPost(db.Model):
     content = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.String(255), nullable=True)
     is_published = db.Column(db.Boolean, nullable=False, default=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime,
         nullable=False,
@@ -99,13 +108,13 @@ class UserPost(db.Model):
         return f"<UserPost {self.title}>"
 
 
-
 class PostComment(db.Model):
     __tablename__ = "post_comments"
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime,
         nullable=False,
@@ -134,7 +143,6 @@ class PostComment(db.Model):
         return f"<PostComment {self.id}>"
 
 
-
 class NewsCategory(db.Model):
     __tablename__ = "news_categories"
 
@@ -142,7 +150,8 @@ class NewsCategory(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False, index=True)
     slug = db.Column(db.String(100), unique=True, nullable=False, index=True)
     description = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
 
     articles = db.relationship(
         "NewsArticle",
@@ -152,7 +161,6 @@ class NewsCategory(db.Model):
 
     def __repr__(self):
         return f"<NewsCategory {self.name}>"
-
 
 
 class NewsArticle(db.Model):
@@ -167,7 +175,8 @@ class NewsArticle(db.Model):
     featured = db.Column(db.Boolean, nullable=False, default=False)
     is_published = db.Column(db.Boolean, nullable=False, default=False)
     published_at = db.Column(db.DateTime, nullable=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False,
+                           default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime,
         nullable=False,
@@ -194,7 +203,6 @@ class NewsArticle(db.Model):
 
     def __repr__(self):
         return f"<NewsArticle {self.title}>"
-
 
 
 def init_database(app):

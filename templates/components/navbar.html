@@ -1,26 +1,219 @@
-<nav class="bg-white z-10 opacity-90">
-  
+<nav class="bg-white shadow-md sticky top-0 z-[1000]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
 
-    <div class="flex items-center space-x-8">
-      <a href="/" class="block opacity-100">
-        <img
-          src="https://media.istockphoto.com/id/1304402879/es/vector/icono-de-la-casa-en-la-plantilla-de-logotipo-vectorial-de-estilo-plano-de-moda.jpg?s=170667a&w=0&k=20&c=EF-4DV5SGpj-Kmpie1RhzK034zBnH4NrjWjm19Lxcss="
-          class="w-8 h-8 object-contain">
-      </a>
+      <div class="flex items-center min-w-0">
+        <a href="/" class="flex items-center gap-2 sm:gap-3 min-w-0">
+          <img src="{{ url_for('static', filename='images/footballarrow.png') }}"
+            class="w-12 h-12 sm:w-28 sm:h-20 object-contain">
+          <span class="text-2xl sm:text-xl font-bold leading-none truncate">FutBlog</span>
+        </a>
+      </div>
 
-      <a href="account" class="block">
-        <img
-          src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png"
-          class="w-8 h-8 object-contain">
-      </a>
+      <div class="hidden md:flex items-center space-x-8 text-gray-700 font-medium">
+        <a href="/" class="hover:text-black hover:bg-gray-100 px-3 py-2 rounded-lg transition">Home</a>
+        <a href="/news" class="hover:text-black hover:bg-gray-100 px-3 py-2 rounded-lg transition">News</a>
+        <a href="/blog" class="hover:text-black hover:bg-gray-100 px-3 py-2 rounded-lg transition">Blog</a>
+      </div>
 
-      <a href="inloggen" class="text-3xl">inloggen</a>
-      <a href="registreren" class="text-3xl">Registreren</a>
 
-      <a href="maakpost" class="block">
-        <img 
-          src="https://static.vecteezy.com/system/resources/previews/011/912/003/non_2x/plus-sign-icon-free-png.png"
-           class="w-8 h-8 object-contain">
-      </a>
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        {% if user %}
+
+        <div class="relative">
+          <button id="userMenuButton" type="button"
+            class="flex items-center gap-2 hover:bg-gray-100 rounded-lg px-2 py-1 transition focus:outline-none"
+            onclick="toggleUserDropdown(event)">
+            <img
+              src="{{ url_for('static', filename='uploads/profile_images/' + user.profile_image) if user.profile_image else url_for('static', filename='images/default-avatar.png') }}"
+              class="w-10 h-10 rounded-full border object-cover">
+            <span class="hidden sm:block text-sm font-medium max-w-[90px] truncate">
+              {{ user.username }}
+            </span>
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+        </div>
+
+        <button id="mobileMenuButton"
+          class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
+          type="button" onclick="toggleMobileMenu()">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+
+        {% else %}
+
+        <div class="hidden md:flex items-center space-x-4">
+          <a href="/inloggen" class="text-sm hover:bg-gray-100 px-3 py-2 rounded-lg transition">Login</a>
+          <a href="/registreren" class="text-sm font-semibold hover:bg-gray-100 px-3 py-2 rounded-lg transition">Sign
+            up</a>
+        </div>
+
+        <button id="mobileMenuButton"
+          class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
+          type="button" onclick="toggleMobileMenu()">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+
+        {% endif %}
+      </div>
+
     </div>
+
+    <div id="mobileMenu" class="hidden md:hidden pb-4">
+      <div class="flex flex-col gap-2 text-gray-700 font-medium pt-2">
+        <a href="/" class="hover:text-black hover:bg-gray-100 px-3 py-3 rounded-lg transition">Home</a>
+        <a href="/news" class="hover:text-black hover:bg-gray-100 px-3 py-3 rounded-lg transition">News</a>
+        <a href="/blog" class="hover:text-black hover:bg-gray-100 px-3 py-3 rounded-lg transition">Blog</a>
+
+        {% if user %}
+        <div class="border-t pt-3 mt-2 flex flex-col gap-2">
+          <a href="/maakpost" class="hover:bg-gray-100 px-3 py-3 rounded-lg transition">Maak een post aan</a>
+
+          {% if user.role in ['admin', 'editor'] %}
+          <a href="/maaknieuwsartikel" class="hover:bg-gray-100 px-3 py-3 rounded-lg transition">
+            Nieuwsartikel aanmaken
+          </a>
+          {% endif %}
+
+          <a href="/account" class="hover:bg-gray-100 px-3 py-3 rounded-lg transition">Profielpagina</a>
+          <a href="/reviews" class="hover:bg-gray-100 px-3 py-3 rounded-lg transition">Je reviews</a>
+          <a href="/logout" class="hover:bg-gray-100 px-3 py-3 rounded-lg transition">Uitloggen</a>
+        </div>
+        {% else %}
+        <div class="border-t pt-3 mt-2 flex flex-col gap-2">
+          <a href="/inloggen" class="hover:bg-gray-100 px-3 py-3 rounded-lg transition">Login</a>
+          <a href="/registreren" class="hover:bg-gray-100 px-3 py-3 rounded-lg transition">Sign up</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </nav>
+
+{% if user %}
+<div id="dropdownOverlay" class="hidden fixed inset-0 z-[9998]" onclick="closeUserDropdown()"></div>
+
+<div id="userDropdown"
+  class="hidden fixed w-64 bg-white border border-gray-300 rounded-2xl shadow-2xl overflow-hidden z-[9999]">
+
+  <a href="/maakpost"
+    class="flex items-center gap-3 px-5 py-4 text-sm hover:bg-gray-100 transition border-b border-gray-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4v16m8-8H4" />
+    </svg>
+    <span>maak een post aan</span>
+  </a>
+
+  {% if user.role in ['admin', 'editor'] %}
+  <a href="/maaknieuwsartikel"
+    class="flex items-center gap-3 px-5 py-4 text-sm hover:bg-gray-100 transition border-b border-gray-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 6.5h14"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 10.5h14"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 14.5h9"></path>
+      <rect x="3" y="4" width="18" height="16" rx="2" stroke-width="1.8"></rect>
+    </svg>
+    <span>nieuwsartikel aanmaken</span>
+  </a>
+  {% endif %}
+
+  <a href="/account"
+    class="flex items-center gap-3 px-5 py-4 text-sm hover:bg-gray-100 transition border-b border-gray-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <rect x="3" y="4" width="14" height="16" rx="1.5" stroke-width="1.8"></rect>
+      <circle cx="10" cy="9" r="2.2" stroke-width="1.8"></circle>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+        d="M6.8 16.2c.9-1.7 2.1-2.5 3.2-2.5 1.2 0 2.5.8 3.3 2.5"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 8h3M19 12h3M19 16h3"></path>
+    </svg>
+    <span>profielpagina</span>
+  </a>
+
+  <a href="/reviews"
+    class="flex items-center gap-3 px-5 py-4 text-sm hover:bg-gray-100 transition border-b border-gray-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h8M8 12h8M8 17h5"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+        d="M6 4h12a1 1 0 011 1v14l-3-2-3 2-3-2-3 2V5a1 1 0 011-1z"></path>
+    </svg>
+    <span>je reviews</span>
+  </a>
+
+  <a href="/logout" class="flex items-center gap-3 px-5 py-4 text-sm hover:bg-gray-100 transition">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 16l4-4m0 0l-4-4m4 4H9"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 20H6a2 2 0 01-2-2V6a2 2 0 012-2h7">
+      </path>
+    </svg>
+    <span>uitloggen</span>
+  </a>
+
+</div>
+{% endif %}
+
+<script>
+  function toggleUserDropdown(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById("userDropdown");
+    const overlay = document.getElementById("dropdownOverlay");
+    const button = document.getElementById("userMenuButton");
+
+    if (!dropdown || !overlay || !button) return;
+
+    const isHidden = dropdown.classList.contains("hidden");
+
+    if (!isHidden) {
+      closeUserDropdown();
+      return;
+    }
+
+    const rect = button.getBoundingClientRect();
+    const dropdownWidth = dropdown.offsetWidth || 256;
+    let left = rect.right - dropdownWidth;
+
+    if (left < 16) left = 16;
+    if (left + dropdownWidth > window.innerWidth - 16) {
+      left = window.innerWidth - dropdownWidth - 16;
+    }
+
+    dropdown.style.top = `${rect.bottom + 8}px`;
+    dropdown.style.left = `${left}px`;
+
+    overlay.classList.remove("hidden");
+    dropdown.classList.remove("hidden");
+  }
+
+  function closeUserDropdown() {
+    document.getElementById("userDropdown")?.classList.add("hidden");
+    document.getElementById("dropdownOverlay")?.classList.add("hidden");
+  }
+
+  function toggleMobileMenu() {
+    document.getElementById("mobileMenu").classList.toggle("hidden");
+  }
+
+  window.addEventListener("resize", closeUserDropdown);
+  window.addEventListener("scroll", closeUserDropdown);
+
+  document.addEventListener("click", function (event) {
+    const dropdown = document.getElementById("userDropdown");
+    const button = document.getElementById("userMenuButton");
+
+    if (!dropdown || !button) return;
+
+    if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+      closeUserDropdown();
+    }
+  });
+</script>

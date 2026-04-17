@@ -2,17 +2,38 @@
 
 {% block content %}
 
-<div class="h-screen flex items-center justify-center">
-  <div class="w-1/2 h-1/2 bg-gray-500 relative">
+<div class="min-h-screen py-10">
+  <div
+    class="mx-auto max-w-5xl rounded-2xl px-6 py-8"
+    style="background-color: var(--color-gray-500);"
+  >
+    <h1 class="mb-8 text-5xl font-bold text-white">Voetbalnieuws</h1>
 
+<<<<<<< HEAD
     <button type="button" class="absolute -right-10 top-1/2 -translate-y-1/2 translate-x-full" onclick="volgende()">
       <img class="w-10 cursor-pointer"
         src="https://static.vecteezy.com/system/resources/previews/017/785/077/non_2x/right-arrow-icon-on-transparent-background-free-png.png"
         alt="volgende">
     </button>
+=======
+    <!-- Groot hoofdartikel -->
+    <section class="mb-10 rounded-2xl bg-white p-6 shadow-xl">
+      <div class="relative overflow-hidden rounded-xl">
+        <img
+          id="carouselImage"
+          class="h-[420px] w-full object-cover"
+          alt="Hoofdnieuws voetbal"
+        >
+>>>>>>> e8dc572 (register and login working, new navbar, profilepage and homepage)
 
-    <img id="plaatje" class="w-full h-full object-cover object-center">
+        <button
+          onclick="vorige()"
+          class="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/55 px-4 py-2 text-2xl text-white"
+        >
+          ←
+        </button>
 
+<<<<<<< HEAD
     <button type="button" class="absolute -left-10 top-1/2 -translate-y-1/2 -translate-x-full" onclick="vorige()">
       <img class="w-10 cursor-pointer"
         src="https://static.vecteezy.com/system/resources/thumbnails/017/785/207/small_2x/left-arrow-icon-on-transparent-background-free-png.png"
@@ -22,10 +43,107 @@
 
 
 
+=======
+        <button
+          onclick="volgende()"
+          class="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/55 px-4 py-2 text-2xl text-white"
+        >
+          →
+        </button>
+      </div>
+
+      <div class="mt-4 flex gap-2" id="dots"></div>
+
+      <div class="mt-6">
+        <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-green-700">
+          Hoofdnieuws
+        </p>
+
+        <h2 class="mb-4 text-4xl font-bold text-gray-900">
+          AZ ligt uit Europa na 2-2 tegen Sjachtar Donetsk
+        </h2>
+
+        <p class="mb-5 text-lg leading-8 text-gray-700">
+          AZ heeft het Europese avontuur niet kunnen verlengen. In Alkmaar werd het 2-2
+          tegen Sjachtar Donetsk, maar door de 3-0 nederlaag in het heenduel was dat niet
+          genoeg. Daarmee is AZ de laatste Nederlandse club die uit Europa verdwijnt.
+        </p>
+
+        <div class="flex items-center justify-between text-sm text-gray-500">
+          <span>Door de redactie</span>
+          <span>17 april 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Andere nieuwsitems onder het hoofdartikel -->
+    <section>
+      <h2 class="mb-5 text-2xl font-bold text-white">Meer voetbalnieuws</h2>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="rounded-2xl bg-white p-5 shadow-lg">
+          <p class="mb-2 text-sm font-semibold uppercase text-green-700">
+            Europa
+          </p>
+          <h3 class="mb-3 text-2xl font-bold text-gray-900">
+            Nederland zakt naar plek acht op coëfficiëntenlijst
+          </h3>
+          <p class="text-gray-600 leading-7">
+            Portugal is Nederland voorbij op de UEFA-coëfficiëntenlijst. Daardoor heeft de
+            eredivisie vanaf de zomer van 2027 nog maar één direct ticket voor de Champions League.
+          </p>
+          <p class="mt-4 text-sm text-gray-400">17 april 2026</p>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-lg">
+          <p class="mb-2 text-sm font-semibold uppercase text-green-700">
+            Champions League
+          </p>
+          <h3 class="mb-3 text-2xl font-bold text-gray-900">
+            Halve finales bekend: Paris–Bayern en Atlético–Arsenal
+          </h3>
+          <p class="text-gray-600 leading-7">
+            De halve finales van de Champions League zijn bevestigd. De wedstrijden worden
+            gespeeld op 28 en 29 april, met de returns op 5 en 6 mei.
+          </p>
+          <p class="mt-4 text-sm text-gray-400">15 april 2026</p>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-lg">
+          <p class="mb-2 text-sm font-semibold uppercase text-green-700">
+            KNVB Beker
+          </p>
+          <h3 class="mb-3 text-2xl font-bold text-gray-900">
+            Bekerfinale AZ – N.E.C. zondagavond om 18.00 uur
+          </h3>
+          <p class="text-gray-600 leading-7">
+            De bekerfinale tussen AZ en N.E.C. wordt zondag 19 april gespeeld. Het duel is
+            niet alleen belangrijk voor de beker, maar ook voor de verdeling van Europese tickets.
+          </p>
+          <p class="mt-4 text-sm text-gray-400">15 april 2026</p>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-lg">
+          <p class="mb-2 text-sm font-semibold uppercase text-green-700">
+            WK 2026
+          </p>
+          <h3 class="mb-3 text-2xl font-bold text-gray-900">
+            Scheidsrechter Makkelie geselecteerd voor WK 2026
+          </h3>
+          <p class="text-gray-600 leading-7">
+            Danny Makkelie is door de FIFA geselecteerd als scheidsrechter voor het WK 2026.
+            Rob Dieperink en Dennis Higler gaan mee als VAR.
+          </p>
+          <p class="mt-4 text-sm text-gray-400">10 april 2026</p>
+        </article>
+      </div>
+    </section>
+>>>>>>> e8dc572 (register and login working, new navbar, profilepage and homepage)
   </div>
 </div>
 
 <script>
+<<<<<<< HEAD
   // willeukeurig voorbeelden 
   let images = [
     "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1200&q=80",
@@ -60,6 +178,49 @@
   }
 
   document.addEventListener('DOMContentLoaded', loadImages)
+=======
+  const afbeeldingen = [
+    "https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1518604666860-9ed391f76460?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1570498839593-e565b39455fc?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1508098682722-e99c643e7485?auto=format&fit=crop&w=1400&q=80"
+  ];
+
+  let huidigeIndex = 0;
+  const carouselImage = document.getElementById("carouselImage");
+  const dotsContainer = document.getElementById("dots");
+
+  function renderCarousel() {
+    carouselImage.src = afbeeldingen[huidigeIndex];
+    dotsContainer.innerHTML = "";
+
+    afbeeldingen.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className =
+        "h-3 w-3 rounded-full " +
+        (index === huidigeIndex ? "bg-green-700" : "bg-gray-300");
+
+      dot.onclick = () => {
+        huidigeIndex = index;
+        renderCarousel();
+      };
+
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  function volgende() {
+    huidigeIndex = (huidigeIndex + 1) % afbeeldingen.length;
+    renderCarousel();
+  }
+
+  function vorige() {
+    huidigeIndex = (huidigeIndex - 1 + afbeeldingen.length) % afbeeldingen.length;
+    renderCarousel();
+  }
+
+  renderCarousel();
+>>>>>>> e8dc572 (register and login working, new navbar, profilepage and homepage)
 </script>
 
 {% endblock %}

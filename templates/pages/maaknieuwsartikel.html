@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="  items-center mx-auto mt-40 justify-center px-4">
+  <div class="w-full mx-auto max-w-2xl bg-gray-500/90 rounded-sm shadow-2xl p-10">
+
+    <div class="flex flex-col items-center mb-10">
+      <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-300 flex items-center justify-center">
+        {% if old.get('article_image') %}
+          <img id="imagePreview" src="{{ old.get('article_image') }}" class="w-full h-full object-cover">
+        {% else %}
+          <img id="imagePreview" src="" class="w-full h-full object-cover hidden">
+          <span id="imagePlaceholder" class="text-sm text-gray-700">artikel</span>
+        {% endif %}
+      </div>
+
+      <label for="article_image" class="mt-4 text-white text-sm cursor-pointer hover:underline">
+        Kies artikelafbeelding
+      </label>
+
+      <p class="mt-6 text-white text-2xl font-semibold text-center">
+        Nieuwsartikel
+      </p>
+    </div>
+
+    <form action="{{ url_for('createArticle') }}" method="POST" class="w-full">
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Titel</label>
+        <input name="title" type="text" value="{{ old.get('title','') }}" class="w-full h-12 bg-white px-4 text-lg outline-none border border-transparent focus:border-black shadow-sm">
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Beschrijving</label>
+        <input name="description" type="text" value="{{ old.get('description','') }}" class="w-full h-12 bg-white px-4 text-lg outline-none border border-transparent focus:border-black shadow-sm">
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Samenvatting</label>
+        <textarea name="summary" class="w-full h-32 bg-white px-4 py-3 text-lg outline-none border border-transparent focus:border-black shadow-sm resize-none">{{ old.get('summary','') }}</textarea>
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Content</label>
+        <textarea name="content" class="w-full h-48 bg-white px-4 py-3 text-lg outline-none border border-transparent focus:border-black shadow-sm resize-none">{{ old.get('content','') }}</textarea>
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Afbeelding URL</label>
+        <input id="article_image" name="article_image" type="text" value="{{ old.get('article_image','') }}" class="w-full h-12 bg-white px-4 text-lg outline-none border border-transparent focus:border-black shadow-sm">
+      </div>
+
+      <div class="w-full mb-8 flex items-center gap-3">
+        <input type="checkbox" name="is_published" class="w-5 h-5" {% if old.get('is_published') %}checked{% endif %}>
+        <span class="text-white text-lg">Direct publiceren</span>
+      </div>
+
+      <div class="flex justify-center">
+        <button type="submit" class="bg-white text-black px-8 py-3 text-xl font-medium shadow-md hover:bg-gray-100 transition">
+          Opslaan
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+const input=document.getElementById("article_image")
+const img=document.getElementById("imagePreview")
+const ph=document.getElementById("imagePlaceholder")
+function u(){
+  const v=input.value.trim()
+  if(v){
+    img.src=v
+    img.classList.remove("hidden")
+    if(ph)ph.classList.add("hidden")
+  }else{
+    img.src=""
+    img.classList.add("hidden")
+    if(ph)ph.classList.remove("hidden")
+  }
+}
+if(input){
+  input.addEventListener("input",u)
+  u()
+}
+</script>
+
+{% endblock %}

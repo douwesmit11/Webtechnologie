@@ -2,26 +2,175 @@
 
 {% block content %}
 
-<form action="/registreren" method="POST" class="space-y-6 mt-10">
+<div class="items-center mx-auto mt-40 justify-center px-4">
+  <div class="w-full mx-auto max-w-2xl bg-gray-500/90 rounded-sm shadow-2xl p-10">
 
-  <div>
-    <label class="block text-center">Email</label>
-    <input type="email" name="email" class="w-full max-w-md mx-auto block px-4 py-2 border">
+    <div class="flex flex-col items-center mb-10">
+      <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-300 flex items-center justify-center">
+        {% if old.get('article_image') %}
+          <img id="imagePreview" src="{{ old.get('article_image') }}" class="w-full h-full object-cover">
+        {% else %}
+          <img id="imagePreview" src="" class="w-full h-full object-cover hidden">
+          <span id="imagePlaceholder" class="text-sm text-gray-700">artikel</span>
+        {% endif %}
+      </div>
+
+      <label for="article_image" class="mt-4 text-white text-sm cursor-pointer hover:underline">
+        Choose article image
+      </label>
+
+      <p class="mt-6 text-white text-2xl font-semibold text-center">
+        News Article
+      </p>
+    </div>
+
+    <form action="/article/create" method="POST" class="w-full">
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Title</label>
+        <input 
+          name="title" 
+          type="text" 
+          value="{{ old.get('title','') }}"
+          class="w-full h-12 bg-white px-4 text-lg outline-none shadow-sm
+          {% if errors.get('title') %}
+            border-2 border-red-500 focus:ring-2 focus:ring-red-500
+          {% else %}
+            border border-transparent focus:border-black
+          {% endif %}"
+        >
+
+        {% if errors.title %}
+        <div class="mt-2 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700">
+          <p>{{ errors.get('title') }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Description</label>
+        <input 
+          name="description" 
+          type="text" 
+          value="{{ old.get('description','') }}"
+          class="w-full h-12 bg-white px-4 text-lg outline-none shadow-sm
+          {% if errors.get('description') %}
+            border-2 border-red-500 focus:ring-2 focus:ring-red-500
+          {% else %}
+            border border-transparent focus:border-black
+          {% endif %}"
+        >
+
+        {% if errors.description %}
+        <div class="mt-2 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700">
+          <p>{{ errors.get('description') }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Summary</label>
+        <textarea 
+          name="summary"
+          class="w-full h-32 bg-white px-4 py-3 text-lg outline-none shadow-sm resize-none
+          {% if errors.get('summary') %}
+            border-2 border-red-500 focus:ring-2 focus:ring-red-500
+          {% else %}
+            border border-transparent focus:border-black
+          {% endif %}"
+        >{{ old.get('summary','') }}</textarea>
+
+        {% if errors.summary %}
+        <div class="mt-2 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700">
+          <p>{{ errors.get('summary') }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Content</label>
+        <textarea 
+          name="content"
+          class="w-full h-48 bg-white px-4 py-3 text-lg outline-none shadow-sm resize-none
+          {% if errors.get('content') %}
+            border-2 border-red-500 focus:ring-2 focus:ring-red-500
+          {% else %}
+            border border-transparent focus:border-black
+          {% endif %}"
+        >{{ old.get('content','') }}</textarea>
+
+        {% if errors.content %}
+        <div class="mt-2 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700">
+          <p>{{ errors.get('content') }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Image URL</label>
+        <input 
+          id="article_image" 
+          name="article_image" 
+          type="text" 
+          value="{{ old.get('article_image','') }}"
+          class="w-full h-12 bg-white px-4 text-lg outline-none shadow-sm
+          {% if errors.get('article_image') %}
+            border-2 border-red-500 focus:ring-2 focus:ring-red-500
+          {% else %}
+            border border-transparent focus:border-black
+          {% endif %}"
+        >
+
+        {% if errors.article_image %}
+        <div class="mt-2 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700">
+          <p>{{ errors.get('article_image') }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="w-full mb-8 flex items-center gap-3">
+        <input type="checkbox" name="is_published" class="w-5 h-5" {% if old.get('is_published') %}checked{% endif %}>
+        <span class="text-white text-lg">Publish immediately</span>
+      </div>
+
+      {% if errors.invalid %}
+      <div class="mb-6 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700">
+        <p>{{ errors.get('invalid') }}</p>
+      </div>
+      {% endif %}
+
+      <div class="flex justify-center">
+        <button type="submit" class="bg-white text-black px-8 py-3 text-xl font-medium shadow-md hover:bg-gray-100 transition">
+          Save
+        </button>
+      </div>
+
+    </form>
   </div>
+</div>
 
-  <div>
-    <label class="block text-center">Wachtwoord</label>
-    <input type="password" name="password" class="w-full max-w-md mx-auto block px-4 py-2 border">
-  </div>
+<script>
+const input = document.getElementById("article_image");
+const img = document.getElementById("imagePreview");
+const ph = document.getElementById("imagePlaceholder");
 
-  <button type="submit" class="w-full max-w-md mx-auto block bg-gray-600 text-white py-2 px-4">
-    Inloggen
-  </button>
+function u() {
+  const v = input.value.trim();
+  if (v) {
+    img.src = v;
+    img.classList.remove("hidden");
+    if (ph) ph.classList.add("hidden");
+  } else {
+    img.src = "";
+    img.classList.add("hidden");
+    if (ph) ph.classList.remove("hidden");
+  }
+}
 
-</form>
-
-<a href="/registreren" class="text-center block mt-4">
-  Heeft u nog geen account? Klik hier om te registreren
-</a>
+if (input) {
+  input.addEventListener("input", u);
+  u();
+}
+</script>
 
 {% endblock %}

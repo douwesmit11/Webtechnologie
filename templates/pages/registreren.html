@@ -2,34 +2,225 @@
 
 {% block content %}
 
-<form action="/registreren/create" method="POST" class="space-y-6 bg-white opacity-90 mt-10 mx-auto rounded-md w-4/12 p-6 ">
+<form action="/registreren/create" method="POST" enctype="multipart/form-data"
+  class="space-y-6 bg-white opacity-90 mx-auto my-auto mt-40 rounded-md w-4/12 p-6 ">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="bg-green-500 text-white p-3 rounded text-center">
+      {% for category, message in messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+
+    <script>
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
+    </script>
+  {% endif %}
+  {% endwith %}
 
   <div>
     <label class="block text-center">Gebruikersnaam</label>
-    <input type="text" name="username" class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg">
+    <input
+      type="text"
+      name="username"
+      value="{{ old.get('username', '') }}"
+      class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 {% if errors.get('username') %} border-red-500 focus:ring-red-500 {% endif %}"
+    >
+    {% if errors.get('username') %}
+    <div class="mt-2 rounded-lg border border-red-300 bg-red-50 max-w-md mx-auto px-4 py-3 text-red-700">
+      <p class="text-sm font-medium">
+        {{ errors.get('username') }}
+      </p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="text-center">
+    <label class="block mb-2">Profiel afbeelding</label>
+
+    <input 
+      type="file" 
+      id="profile_image"
+      name="profile_image" 
+      accept="image/*"
+      onchange="previewImage(event)"
+      class="hidden"
+    >
+
+    <label for="profile_image" class="cursor-pointer inline-block relative group">
+      <img id="preview"
+           src="https://via.placeholder.com/100"
+           class="w-24 h-24 rounded-full object-cover border mx-auto">
+
+      <div class="absolute inset-0 rounded-full bg-black bg-opacity-40 
+                  flex items-center justify-center opacity-0 
+                  group-hover:opacity-100 transition">
+        <span class="text-white text-xs">Upload</span>
+      </div>
+    </label>
+
+    <p class="text-sm text-gray-500 mt-2">Klik op de cirkel om te uploaden</p>
   </div>
 
   <div>
     <label class="block text-center">Email</label>
-    <input type="email" name="email" class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg">
+    <input
+      type="text"
+      name="email"
+      value="{{ old.get('email', '') }}"
+      class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 {% if errors.get('email') %} border-red-500 focus:ring-red-500 {% endif %}"
+    >
+    {% if errors.get('email') %}
+    <div class="mt-2 rounded-lg border border-red-300 bg-red-50 max-w-md mx-auto px-4 py-3 text-red-700">
+      <p class="text-sm font-medium">
+        {{ errors.get('email') }}
+      </p>
+    </div>
+    {% endif %}
   </div>
 
-  <div>
-    <label class="block text-center">Wachtwoord</label>
-    <input type="password" name="password" class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg">
+  <div class="mt-4">
+    <label class="block text-center mb-1">Wachtwoord</label>
+
+    <div class="relative w-full max-w-md mx-auto">
+      <input
+        id="password"
+        type="password"
+        name="password"
+        class="w-full px-4 py-2 pr-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 {% if errors.get('password') %} border-red-500 focus:ring-red-500 {% endif %}"
+      >
+
+      <button
+        type="button"
+        onclick="togglePassword('password', 'eyeOpen1', 'eyeClosed1')"
+        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700"
+      >
+        <svg id="eyeOpen1" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5
+               c4.477 0 8.268 2.943 9.542 7
+               -1.274 4.057-5.065 7-9.542 7
+               -4.477 0-8.268-2.943-9.542-7z"/>
+        </svg>
+
+        <svg id="eyeClosed1" xmlns="http://www.w3.org/2000/svg"
+             class="h-5 w-5 hidden"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13.875 18.825A10.05 10.05 0 0112 19
+               c-4.478 0-8.27-2.943-9.543-7
+               a9.97 9.97 0 012.042-3.368M6.223 6.223
+               A9.953 9.953 0 0112 5c4.478 0 8.27 2.943 9.543 7
+               a9.97 9.97 0 01-4.132 5.411M15 12a3 3 0 00-4.243-4.243M3 3l18 18"/>
+        </svg>
+      </button>
+    </div>
+
+    {% if errors.get('password') %}
+    <div class="mt-2 rounded-lg border border-red-300 bg-red-50 max-w-md mx-auto px-4 py-3 text-red-700">
+      <p class="text-sm font-medium">
+        {{ errors.get('password') }}
+      </p>
+    </div>
+    {% endif %}
   </div>
 
-   <div>
-    <label class="block text-center">Wachtwoord herhalen</label>
-    <input type="password" name="password_repeat" class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg">
+  <div class="mt-4">
+    <label class="block text-center mb-1">Wachtwoord herhalen</label>
+
+    <div class="relative w-full max-w-md mx-auto">
+      <input
+        id="password_repeat"
+        type="password"
+        name="password_repeat"
+        class="w-full px-4 py-2 pr-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 {% if errors.get('password_repeat') %} border-red-500 focus:ring-red-500 {% endif %}"
+      >
+
+      <button
+        type="button"
+        onclick="togglePassword('password_repeat', 'eyeOpen2', 'eyeClosed2')"
+        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700"
+      >
+        <svg id="eyeOpen2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5
+               c4.477 0 8.268 2.943 9.542 7
+               -1.274 4.057-5.065 7-9.542 7
+               -4.477 0-8.268-2.943-9.542-7z"/>
+        </svg>
+
+        <svg id="eyeClosed2" xmlns="http://www.w3.org/2000/svg"
+             class="h-5 w-5 hidden"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13.875 18.825A10.05 10.05 0 0112 19
+               c-4.478 0-8.27-2.943-9.543-7
+               a9.97 9.97 0 012.042-3.368M6.223 6.223
+               A9.953 9.953 0 0112 5c4.478 0 8.27 2.943 9.543 7
+               a9.97 9.97 0 01-4.132 5.411M15 12a3 3 0 00-4.243-4.243M3 3l18 18"/>
+        </svg>
+      </button>
+    </div>
+
+    {% if errors.get('password_repeat') %}
+    <div class="mt-2 rounded-lg border border-red-300 bg-red-50 max-w-md mx-auto px-4 py-3 text-red-700">
+      <p class="text-sm font-medium">
+        {{ errors.get('password_repeat') }}
+      </p>
+    </div>
+    {% endif %}
   </div>
-  
 
-
-  <button type="submit" class="w-full max-w-md mx-auto block bg-blue-600 text-white py-2 px-4 rounded-lg">
+  <button type="submit"
+    class="w-full max-w-md mx-auto block bg-blue-600 text-white py-2 px-4 rounded-lg">
     registreren
   </button>
 
+  <p class="text-center">
+    Al een account? Klik <a href="/inloggen" class="underline">HIER</a> om in te loggen
+  </p>
 </form>
+
+<script>
+function togglePassword(inputId, openId, closedId) {
+  const input = document.getElementById(inputId);
+  const openIcon = document.getElementById(openId);
+  const closedIcon = document.getElementById(closedId);
+
+  if (input.type === "password") {
+    input.type = "text";
+    openIcon.classList.add("hidden");
+    closedIcon.classList.remove("hidden");
+  } else {
+    input.type = "password";
+    openIcon.classList.remove("hidden");
+    closedIcon.classList.add("hidden");
+  }
+}
+
+function previewImage(event) {
+  const input = event.target;
+  const preview = document.getElementById('preview');
+
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
 
 {% endblock %}

@@ -2,48 +2,80 @@
 
 {% block content %}
 
-<div class="h-screen flex items-center justify-center">
-  <form id="postForm" class="w-1/2 h-1/2 bg-gray-500 p-6" onsubmit="return false">
-    <p class="text-xl ml-4">Post bewerken</p>
+<div class="min-h-screen flex items-center justify-center px-4 py-16">
+  <div class="w-full max-w-3xl bg-gray-500/80 rounded-sm shadow-2xl px-10 py-12">
 
-    <button id="submit" type="button " class="bg-green-600 cursor-pointer text-white py-2 px-4 ml-auto block mb-4" onclick="submitPost()">
-      Klaar & post
-    </button>
+    <form action="/post/update" method="POST" enctype="multipart/form-data">
 
-    <div class="mb-4">
-      <label class="block text-center">Titel</label>
-      <input type="text" name="titel" id="titel" class="w-full max-w-md mx-auto block h-10 bg-white px-2">
-    </div>
+      <div class="flex flex-col items-center mb-10">
+        <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-300 flex items-center justify-center">
+          <img id="fotoid" src="" class="w-full h-full object-cover hidden">
+          <span id="fotoPlaceholder" class="text-sm text-gray-800">profielfoto</span>
+        </div>
 
-    <div class="flex items-center gap-6 justify-center mt-6">
+        <button type="button"
+          onclick="document.getElementById('fotokiezen').click()"
+          class="mt-4 text-white text-sm hover:underline">
+          Kies profielfoto
 
-      <div class="text-center">
-        <button type="button " onclick="document.getElementById('fotokiezen').click()">
-          <img class="cursor-pointer w-10 mx-auto"
-            src="https://static.vecteezy.com/system/resources/previews/011/912/003/non_2x/plus-sign-icon-free-png.png">
         </button>
-        <p>Voeg foto toe</p>
+
+        <input type="file" id="fotokiezen" name="photo" class="hidden" accept="image/*" onchange="foto(event)">
+
+        <p class="mt-6 text-white text-2xl font-semibold text-center">
+          Post bewerken
+        </p>
       </div>
 
-      <img id="fotoid" class="object-cover w-16 h-16 rounded">
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Titel</label>
+        <input
+          type="text"
+          name="title"
+          class="w-full h-12 bg-white px-4 text-lg outline-none border border-transparent focus:border-black shadow-sm"
+        >
+      </div>
 
-      <input type="file" id="fotokiezen" name="image" class="hidden" accept="image/*" onchange="foto(event)">
-    </div>
+      <div class="w-full mb-6">
+        <label class="block text-black text-xl mb-2">Beschrijving</label>
+        <input
+          type="text"
+          name="description"
+          class="w-full h-12 bg-white px-4 text-lg outline-none border border-transparent focus:border-black shadow-sm"
+        >
+      </div>
 
-    <div class="mt-6">
-      <label class="block text-center">Beschrijving</label>
-      <input type="text" name="description" id="description" class="w-full max-w-md mx-auto block h-10 bg-white px-2">
-    </div>
+      <div class="w-full mb-10">
+        <label class="block text-black text-xl mb-2">Content</label>
+        <textarea
+          name="content"
+          class="w-full h-40 bg-white px-4 py-3 text-lg outline-none border border-transparent focus:border-black shadow-sm resize-none"
+        ></textarea>
+      </div>
 
-  </form>
+      <div class="flex justify-center">
+        <button type="submit" class="bg-white text-black px-10 py-3 text-xl font-medium shadow-md hover:bg-gray-100 transition">
+          Opslaan
+        </button>
+      </div>
+
+    </form>
+  </div>
+
 </div>
 
 <script>
   function foto(event) {
     const file = event.target.files[0];
-    const preview = document.getElementById('fotoid');
+
+    const preview = document.getElementById("fotoid");
+    const placeholder = document.getElementById("fotoPlaceholder");
+
+
     if (file) {
       preview.src = URL.createObjectURL(file);
+      preview.classList.remove("hidden");
+      placeholder.classList.add("hidden");
     }
   }
 
@@ -60,7 +92,7 @@
     const description = formData.get('description')?.trim();
     const file = formData.get('image');
 
-    // kijk of alle velden zijn ingevuld
+    
     const filePresent = file && file.size && file.size > 0;
     if (!titel || !description || !filePresent) {
       alert('Je moet titel,  beschrijving en een foto invullen.');
@@ -68,32 +100,8 @@
       return;
     }
 
-    //fouten opvangen
 
 
-    try {
-      const res = await fetch('/api/posts', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!res.ok) {
-        const txt = await res.text();
-        alert('Fout bij posten: ' + txt);
-        if (btn) { btn.disabled = false; }
-        return;
-      }
-
-      const json = await res.json();
-      // na posten ga naar begin.html
-      if (json && json.id) {
-        window.location.href = '/';
-      } 
-    } catch (err) {
-      alert('Netwerkfout: ' + err.message);
-      if (btn) { btn.disabled = false; }
-    }
-  }
 </script>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, flash
 from flask import session, g
 from flask import render_template, url_for
-from models import db, User, NewsArticle
+from models import db, User, NewsArticle, UserPost
 from datetime import timedelta
 from werkzeug.utils import secure_filename
 import uuid
@@ -207,6 +207,74 @@ def createUser():
     return redirect(url_for("registreren"))
 
 
+@app.route("/post/create", methods=["POST"])
+def createPost():
+    if "user_id" not in session:
+        flash("You must be logged in to create a post.", "error")
+        return redirect(url_for("inloggen"))
+
+    user = User.query.get(session["user_id"])
+
+    if not user:
+        session.clear()
+        flash("User not found. Please log in again.", "error")
+        return redirect(url_for("inloggen"))
+
+    data = request.form
+
+    title = data.get("title", "").strip()
+    content = data.get("content", "").strip()
+    is_published = data.get("is_published") == "on"
+
+    file = request.files.get("photo")
+    image_url = None
+
+    errors = {}
+
+    if not title:
+        errors["title"] = "Title is required."
+    elif len(title) < 3:
+        errors["title"] = "Title must be at least 3 characters."
+
+    if not content:
+        errors["content"] = "Content is required."
+    elif len(content) < 10:
+        errors["content"] = "Content must be at least 10 characters."
+
+    if file and file.filename:
+        if not allowed_file(file.filename):
+            errors["photo"] = "Only png, jpg, jpeg, and webp are allowed."
+
+    if errors:
+        session["errors"] = errors
+        session["old"] = {
+            "title": title,
+            "content": content,
+            "is_published": is_published
+        }
+        return redirect(url_for("maakpost"))
+
+    if file and file.filename:
+        ext = file.filename.rsplit(".", 1)[1].lower()
+        filename = f"{uuid.uuid4().hex}.{ext}"
+        filepath = os.path.join(app.config["POST_UPLOAD_FOLDER"]),
+
+    new_post = UserPost(
+        title=title,
+
+        content=content,
+        image_url=image_url,
+        is_published=is_published,
+        author_id=user.id
+    )
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    flash("Post created successfully.", "success")
+    return redirect(url_for("maakpost"))
+
+
 @app.route("/maaknieuwsartikel")
 def maaknieuwsartikel():
     if "user_id" not in session:
@@ -228,7 +296,7 @@ def maaknieuwsartikel():
     return render_template("/pages/maaknieuwsartikel.html", user=user, errors=errors, old=old)
 
 
-@app.route("/article/create", methods=["POST"])
+@ app.route("/article/create", methods=["POST"])
 def createArticle():
     if "user_id" not in session:
         flash("Je moet ingelogd zijn om een nieuwsartikel aan te maken.", "error")
@@ -341,7 +409,7 @@ def get_users():
 # admin routes
 
 
-@app.route("/admin/users")
+@ app.route("/admin/users")
 def users():
     return render_template("pages/admin/users.html")
 
